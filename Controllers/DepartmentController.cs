@@ -23,7 +23,7 @@ namespace ASPNET5Demo1.Controllers
            [HttpGet]
         public async Task<ActionResult<IEnumerable<Department>>> GetDepartment()
         {
-            return await db.Departments.ToListAsync(); 
+            return await db.Departments.AsNoTracking().ToListAsync(); //效能調教，查詢並停止追蹤
         }
 
         [HttpGet("{id}")]
@@ -35,4 +35,4 @@ namespace ASPNET5Demo1.Controllers
                 // return db.Course.Where(x=>x.DepartmentId == id).ToList();
         }
     }
-}
+}   
