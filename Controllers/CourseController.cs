@@ -47,6 +47,7 @@ namespace ASPNET5Demo1.Controllers
         public  async Task<IActionResult>  PutCourse(int id, CourseUpdateModel course)
         {
             var c = db.Courses.Find(id);
+            //valueInjecter
             c.InjectFrom(course);
             await db.SaveChangesAsync();
 
