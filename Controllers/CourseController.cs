@@ -79,6 +79,20 @@ namespace ASPNET5Demo1.Controllers
             return Ok(c);
         }
 
+           // DELETE: api/Course/5
+        [HttpDelete("all")]
+        public  async Task<IActionResult> DeleteCourseAll()
+        {
+          
+
+             
+            await db.Database.ExecuteSqlRawAsync($"Delete from db.Course");
+
+           //await db.SaveChangesAsync();
+
+            return null;
+        }
+
         private bool CourseExists(int id)
         {
             return db.Courses.Any(e => e.CourseId == id);
