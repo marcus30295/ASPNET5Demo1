@@ -11,7 +11,7 @@ using Omu.ValueInjecter;
 namespace ASPNET5Demo1.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController]//內建ModelBinding
     public class CourseController : ControllerBase
     {
         private readonly ContosoUniversityContext db;
@@ -26,6 +26,12 @@ namespace ASPNET5Demo1.Controllers
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
             return await db.Courses.ToListAsync();
+        }
+
+        [HttpGet("empty")]
+        public IActionResult Empty()
+        {
+            return new JsonResult("true");
         }
 
         [HttpGet("credits/{credit}")]
