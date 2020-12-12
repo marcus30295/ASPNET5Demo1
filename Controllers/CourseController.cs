@@ -38,6 +38,7 @@ namespace ASPNET5Demo1.Controllers
         [Produces("application/json")]
         public IActionResult Empty()
         {
+            throw new Exception();
             return new JsonResult("true");
         }
 

@@ -47,11 +47,12 @@ services.AddDbContext<ContosoUniversityContext>(options =>
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ASPNET5Demo1 v1"));
             }
 
+            app.UseExceptionHandler("/error");
             app.UseHttpsRedirection();
 
             app.UseRouting();
