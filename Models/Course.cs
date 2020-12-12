@@ -22,7 +22,7 @@ namespace ASPNET5Demo1.Models
         [JsonIgnore]
         public virtual Department Department { get; set; }
 
-[JsonIgnore]
+        [JsonIgnore]
         public virtual ICollection<CourseInstructor> CourseInstructors { get; set; }
 
         [JsonIgnore]

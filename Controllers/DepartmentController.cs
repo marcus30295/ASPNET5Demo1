@@ -35,7 +35,15 @@ namespace ASPNET5Demo1.Controllers
                 // return db.Course.Where(x=>x.DepartmentId == id).ToList();
         }
 
-         [HttpGet("ddl")]
+      [HttpGet("{*date:datetime}")]
+      public ActionResult<IEnumerable<Department>> GetDepartmentByDate(DateTime date)
+      {
+          return db.Departments.Where(x=>x.StartDate > date).ToList();
+
+          // return db.Course.Where(x=>x.DepartmentId == id).ToList();
+      }
+
+        [HttpGet("ddl")]
      public ActionResult<IEnumerable<DepartmentDropDown>> GetDepartmentDropDown()
         {
                 // SQL query
