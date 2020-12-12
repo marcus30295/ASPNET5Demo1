@@ -34,5 +34,19 @@ namespace ASPNET5Demo1.Controllers
 
                 // return db.Course.Where(x=>x.DepartmentId == id).ToList();
         }
+
+         [HttpGet("ddl")]
+     public ActionResult<IEnumerable<DepartmentDropDown>> GetDepartmentDropDown()
+        {
+                // SQL query
+                //return db.DepartmentsDropDown.FromsqlInterpolated($@"Select DepartmentID, Name from dbo.Department").ToList();
+
+                return db.Departments.Select(x=>new DepartmentDropDown{
+                    DepartmentId = x.DepartmentId,
+                    Name = x.Name
+                }).ToList();
+
+                // return db.Course.Where(x=>x.DepartmentId == id).ToList();
+        }
     }
 }   

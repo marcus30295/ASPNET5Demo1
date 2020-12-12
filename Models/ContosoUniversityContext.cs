@@ -27,6 +27,7 @@ namespace ASPNET5Demo1.Models
         public virtual DbSet<VwCourseStudentCount> VwCourseStudentCounts { get; set; }
         public virtual DbSet<VwDepartmentCourseCount> VwDepartmentCourseCounts { get; set; }
 
+  public virtual DbSet<DepartmentDropDown> DepartmentDropDown { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -224,6 +225,12 @@ namespace ASPNET5Demo1.Models
                 entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
 
                 entity.Property(e => e.Name).HasMaxLength(50);
+            });
+
+             modelBuilder.Entity<DepartmentDropDown>(entity =>
+            {
+                entity.HasNoKey();
+
             });
 
             OnModelCreatingPartial(modelBuilder);

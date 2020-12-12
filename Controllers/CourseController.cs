@@ -44,6 +44,8 @@ namespace ASPNET5Demo1.Controllers
         // PUT: api/Course/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
         public  async Task<IActionResult>  PutCourse(int id, CourseUpdateModel course)
         {
             var c = db.Courses.Find(id);
@@ -57,6 +59,8 @@ namespace ASPNET5Demo1.Controllers
         // POST: api/Course
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<Course>> PostCourse(Course course)
         {
             db.Courses.Add(course);
