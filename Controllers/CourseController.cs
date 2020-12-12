@@ -28,7 +28,14 @@ namespace ASPNET5Demo1.Controllers
             return await db.Courses.ToListAsync();
         }
 
+        //[HttpGet("empty")]
+        //public IActionResult Empty()
+        //{
+        //    return new JsonResult("true");
+        //}
+
         [HttpGet("empty")]
+        [Produces("application/json")]
         public IActionResult Empty()
         {
             return new JsonResult("true");
