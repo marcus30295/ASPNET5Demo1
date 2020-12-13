@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using ASPNET5Demo1.Helper;
 using ASPNET5Demo1.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,9 +15,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
- 
+
 
 namespace ASPNET5Demo1
 {
@@ -30,11 +34,41 @@ namespace ASPNET5Demo1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-// using Microsoft.EntityFrameworkCore;
-services.AddDbContext<ContosoUniversityContext>(options =>
-    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // using Microsoft.EntityFrameworkCore;
+            services.AddDbContext<ContosoUniversityContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //¤Ï§Ç¦C¤Æ
+            services.AddSingleton<JwtHelper>();
+            // dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.IncludeErrorDetails = true; // Default: true
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // Let "sub" assign to User.Identity.Name
+                        NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+                        // Let "roles" assign to Roles for [Authorized] attributes
+                        RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role",
+
+                        // Validate the Issuer
+                        ValidateIssuer = true,
+                        ValidIssuer = Configuration.GetValue<string>("JwtSettings:Issuer"),
+
+                        ValidateAudience = false,
+                        //ValidAudience = "JwtAuthDemo", // TODO
+
+                        ValidateLifetime = true,
+
+                        ValidateIssuerSigningKey = false,
+
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration.GetValue<string>("JwtSettings:SignKey")))
+                    };
+                });
+
+            //ï¿½Ï§Ç¦Cï¿½ï¿½
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
@@ -56,7 +90,7 @@ services.AddDbContext<ContosoUniversityContext>(options =>
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

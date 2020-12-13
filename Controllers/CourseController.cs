@@ -6,19 +6,23 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ASPNET5Demo1.Models;
+using Microsoft.AspNetCore.Authorization;
 using Omu.ValueInjecter;
+using ASPNET5Demo1.Helper;
 
 namespace ASPNET5Demo1.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]//內建ModelBinding
     public class CourseController : ControllerBase
     {
         private readonly ContosoUniversityContext db;
-
-        public CourseController(ContosoUniversityContext context)
+        private readonly JwtHelper _jwtHelper;
+        public CourseController(ContosoUniversityContext context, JwtHelper jwtHelper)
         {
             db = context;
+            _jwtHelper = jwtHelper;
         }
 
         // GET: api/Course
@@ -111,9 +115,6 @@ namespace ASPNET5Demo1.Controllers
             return null;
         }
 
-        private bool CourseExists(int id)
-        {
-            return db.Courses.Any(e => e.CourseId == id);
-        }
+      
     }
 }
