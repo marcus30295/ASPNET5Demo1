@@ -43,7 +43,7 @@ namespace ASPNET5Demo1.Controllers
         public IActionResult Empty()
         {
             throw new Exception();
-            return new JsonResult("true");
+            //return new JsonResult("true");
         }
 
         [HttpGet("credits/{credit}")]
