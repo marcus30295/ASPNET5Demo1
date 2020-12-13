@@ -23,9 +23,11 @@ namespace ASPNET5Demo1.Controllers
         [HttpGet("GetJwtSettings")]
         public ActionResult<JwtSettings> GetJwtSettings()
         {
+            const int id = 123;
             _logger.LogTrace("Trace");
             _logger.LogDebug("Debug");
             _logger.LogInformation("Information");
+             _logger.LogInformation("Test:{id}", id);
             _logger.LogWarning("Warning");
             _logger.LogError("Error");
             _logger.LogCritical("Critical");
