@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+    <UserSecretsId>dd987160-e5c6-428e-84c0-d36cce3c9851</UserSecretsId>
   </PropertyGroup>
 
 

@@ -1,5 +1,6 @@
 using ASPNET5Demo1.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 //using ASPNET5Demo1.Models;
@@ -11,16 +12,23 @@ namespace ASPNET5Demo1.Controllers
     public class ConfigController : ControllerBase
     {
         private readonly IOptions<JwtSettings> _JwtSettings;
-
-        public ConfigController(IOptions<JwtSettings> JwtSettings)
+        private readonly ILogger _logger;
+        public ConfigController(IOptions<JwtSettings> JwtSettings,ILogger<ConfigController> logger)
         {
-            _JwtSettings = JwtSettings;
+            this._JwtSettings = JwtSettings;
+            this._logger = logger;
         }
 
 
         [HttpGet("GetJwtSettings")]
         public ActionResult<JwtSettings> GetJwtSettings()
         {
+            _logger.LogTrace("Trace");
+            _logger.LogDebug("Debug");
+            _logger.LogInformation("Information");
+            _logger.LogWarning("Warning");
+            _logger.LogError("Error");
+            _logger.LogCritical("Critical");
             return _JwtSettings.Value;
         }
     }
